@@ -3,6 +3,8 @@ import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
+import AddTask from './AddTask';
+
 export default class CalendarApp extends React.Component {
 	// constructor(props) {
 	// 	super(props);
@@ -11,7 +13,6 @@ export default class CalendarApp extends React.Component {
 
 	state = {
 		dateContext: moment(),
-		today: moment(),
 		showMonthList: false,
 		showYearList: ''
 	};
@@ -60,7 +61,6 @@ export default class CalendarApp extends React.Component {
 
 	onYearListChange = (e) => {
 		this.setYear(e.target.value);
-		// this.props.onYearListChange && this.props.onYearListChange(e, e.target.value);
 	};
 
 	onYearListKeyUp = (e) => {
@@ -105,7 +105,7 @@ export default class CalendarApp extends React.Component {
 
 	YearList = (props) =>
 		this.state.showYearList ? (
-			<input type='number' defaultValue={this.currentYear()} className='editor-year' /* ref={this.yearInput} */ onKeyUp={this.onYearListKeyUp} onChange={(e) => this.onYearListChange(e)} />
+			<input type='number' defaultValue={this.currentYear()} className='editor-year' onKeyUp={this.onYearListKeyUp} onChange={(e) => this.onYearListChange(e)} />
 		) : (
 			<span className='label-year' onDoubleClick={this.onYearListDoubleClick}>
 				{this.currentYear()}
@@ -138,7 +138,8 @@ export default class CalendarApp extends React.Component {
 					<span>{i}</span>
 					<br />
 					{/* <FontAwesomeIcon className='add-task' icon={faPlus} color={'grey'}></FontAwesomeIcon> */}
-					<input className='add-task' type='button' value='+' />
+					{/* <input className='add-task' type='button' value='+' /> */}
+					<AddTask></AddTask>
 				</td>
 			);
 		}
