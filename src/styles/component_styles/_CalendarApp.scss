@@ -41,10 +41,12 @@ tr {
 
 .day {
 	font-size: 0.8em;
+	height: 5rem !important;
+	border: 1px black solid;
 }
 
 .day {
-	cursor: pointer;
+	// cursor: pointer;
 	width: 24px;
 	height: 24px;
 	line-height: 24px;
@@ -103,4 +105,11 @@ tr {
 
 .label-month {
 	cursor: pointer;
+}
+
+.add-task {
+	cursor: pointer;
+	width: 70%;
+	background: transparent;
+	border: none;
 }

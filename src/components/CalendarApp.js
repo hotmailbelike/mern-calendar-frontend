@@ -134,8 +134,11 @@ export default class CalendarApp extends React.Component {
 		for (let i = 1; i <= this.daysInMonth(); i++) {
 			let className = i === this.currentDay() ? 'day current-day' : 'day';
 			daysInMonth.push(
-				<td key={i} className={className}>
+				<td valign='top' key={i} className={className}>
 					<span>{i}</span>
+					<br />
+					{/* <FontAwesomeIcon className='add-task' icon={faPlus} color={'grey'}></FontAwesomeIcon> */}
+					<input className='add-task' type='button' value='+' />
 				</td>
 			);
 		}
