@@ -11,7 +11,7 @@ export default class funcName extends React.Component {
 		dateContext: moment(),
 		today: moment(),
 		showMonthList: false,
-		showYearSelector: false
+		showYearList: ''
 	};
 
 	weekdayNames = moment.weekdays();
@@ -41,7 +41,24 @@ export default class funcName extends React.Component {
 
 	onMonthClick = (monthName) => {
 		let monthNumber = this.monthNames.indexOf(monthName);
-		let dateContext = this.state.dateContext;
+		let dateContext = { ...this.state.dateContext };
+		dateContext = moment(dateContext).set('month', monthNumber);
+		this.setState({
+			dateContext: dateContext
+		});
+	};
+
+	onYearListDoubleClick = () => this.setState({ showYearList: true });
+
+	setYear = (year) => {
+		let dateContext = { ...this.state.dateContext };
+		dateContext = moment(dateContext).set('year', year);
+		this.setState({ dateContext });
+	};
+
+	onYearListChange = (e) => {
+		this.setYear(e.target.value);
+		this.props.onYearListChange && this.props.onYearListChange(e, e.target.value);
 	};
 
 	//Components (will be separated later)
@@ -65,6 +82,15 @@ export default class funcName extends React.Component {
 		</span>
 	);
 
+	YearList = (props) =>
+		this.state.showYearList ? (
+			<input type='number' defaultValue={this.currentYear()} className='editor-year' /* ref={this.yearInput} */ onKeyUp={this.onYearListKeyUp} onChange={(e) => this.onYearListChange(e)} />
+		) : (
+			<span className='label-year' onDoubleClick={this.onYearListDoubleClick}>
+				{this.currentYear()}
+			</span>
+		);
+
 	render() {
 		let weekdayNames = this.weekdayShortNames.map((day) => (
 			<td key={day} className='week-day'>
@@ -76,7 +102,7 @@ export default class funcName extends React.Component {
 
 		for (let i = 0; i < this.firstDayOfMonth(); i++) {
 			blanksInMonth.push(
-				<td key={i} className='blank'>
+				<td key={i * 17} className='blank'>
 					{''}
 				</td>
 			);
@@ -117,7 +143,7 @@ export default class funcName extends React.Component {
 					<thead>
 						<tr className='calendar-header'>
 							<td colSpan='5'>
-								<this.MonthList></this.MonthList>
+								<this.MonthList></this.MonthList> <this.YearList></this.YearList>
 							</td>
 						</tr>
 					</thead>
