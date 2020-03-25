@@ -10,17 +10,17 @@ export default class funcName extends React.Component {
 	state = {
 		dateContext: moment(),
 		today: moment(),
-		showMonthPopup: false,
-		showYearPopup: false
+		showMonthList: false,
+		showYearSelector: false
 	};
 
 	weekdayNames = moment.weekdays();
 	weekdayShortNames = moment.weekdaysShort();
-	monthsNames = moment.months();
+	monthNames = moment.months();
 
-	year = () => this.state.dateContext.format('Y');
+	currentYear = () => this.state.dateContext.format('Y');
 
-	month = () => this.state.dateContext.format('MMMM');
+	currentMonth = () => this.state.dateContext.format('MMMM');
 
 	daysInMonth = () => this.state.dateContext.daysInMonth();
 
@@ -36,6 +36,34 @@ export default class funcName extends React.Component {
 	/* 
     firstDay: 0 -> Sunday, ..... , 6 -> Saturday
   */
+
+	onMonthListClick = () => this.setState({ showMonthList: !this.state.showMonthList });
+
+	onMonthClick = (monthName) => {
+		let monthNumber = this.monthNames.indexOf(monthName);
+		let dateContext = this.state.dateContext;
+	};
+
+	//Components (will be separated later)
+
+	Month = (props) => (
+		<div className='month'>
+			{props.monthNames.map((monthName) => (
+				<div key={monthName}>
+					<a href='#' onClick={() => this.onMonthClick(monthName)}>
+						{monthName}
+					</a>
+				</div>
+			))}
+		</div>
+	);
+
+	MonthList = (props) => (
+		<span className='label-month' onClick={this.onMonthListClick}>
+			{this.currentMonth()}
+			{this.state.showMonthList && <this.Month monthNames={this.monthNames}></this.Month>}
+		</span>
+	);
 
 	render() {
 		let weekdayNames = this.weekdayShortNames.map((day) => (
@@ -87,7 +115,11 @@ export default class funcName extends React.Component {
 			<div className='calendar-container' /* style={this.props.style} */>
 				<table className='calendar'>
 					<thead>
-						<tr className='calendar-header'></tr>
+						<tr className='calendar-header'>
+							<td colSpan='5'>
+								<this.MonthList></this.MonthList>
+							</td>
+						</tr>
 					</thead>
 					<tbody>
 						<tr>{weekdayNames}</tr>
