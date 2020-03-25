@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 
-export default class funcName extends React.Component {
+export default class CalendarApp extends React.Component {
 	// constructor(props) {
 	// 	super(props);
 	// 	this.style = props.style;
