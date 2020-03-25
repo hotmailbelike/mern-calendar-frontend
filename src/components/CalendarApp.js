@@ -1,5 +1,7 @@
 import React from 'react';
 import moment from 'moment';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 export default class CalendarApp extends React.Component {
 	// constructor(props) {
@@ -58,7 +60,26 @@ export default class CalendarApp extends React.Component {
 
 	onYearListChange = (e) => {
 		this.setYear(e.target.value);
-		this.props.onYearListChange && this.props.onYearListChange(e, e.target.value);
+		// this.props.onYearListChange && this.props.onYearListChange(e, e.target.value);
+	};
+
+	onYearListKeyUp = (e) => {
+		if (e.which === 13 || e.which === 27) {
+			this.setYear(e.target.value);
+			this.setState({ showYearList: false });
+		}
+	};
+
+	nextMonth = () => {
+		let dateContext = { ...this.state.dateContext };
+		dateContext = moment(dateContext).add(1, 'month');
+		this.setState({ dateContext });
+	};
+
+	prevMonth = () => {
+		let dateContext = { ...this.state.dateContext };
+		dateContext = moment(dateContext).subtract(1, 'month');
+		this.setState({ dateContext });
 	};
 
 	//Components (will be separated later)
@@ -144,6 +165,9 @@ export default class CalendarApp extends React.Component {
 						<tr className='calendar-header'>
 							<td colSpan='5'>
 								<this.MonthList></this.MonthList> <this.YearList></this.YearList>
+							</td>
+							<td colSpan='2' className='change-month'>
+								<FontAwesomeIcon icon={faChevronLeft} onClick={this.prevMonth}></FontAwesomeIcon> <FontAwesomeIcon icon={faChevronRight} onClick={this.nextMonth}></FontAwesomeIcon>
 							</td>
 						</tr>
 					</thead>
