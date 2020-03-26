@@ -128,6 +128,7 @@ export default class CalendarApp extends React.Component {
 				</td>
 			);
 		}
+		// i*17 just so key becomes unique
 
 		let daysInMonth = [];
 
