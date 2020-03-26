@@ -6,7 +6,8 @@ export default class AddTask extends React.Component {
 	state = {
 		buttonMode: true,
 		textMode: false,
-		value: ''
+		value: '',
+		id: ''
 	};
 
 	changeToText = () => this.setState({ buttonMode: false, textMode: true });
@@ -16,9 +17,6 @@ export default class AddTask extends React.Component {
 	};
 
 	saveChanges = (e) => {
-		// if (e.which === 13 && (e.target.value === '' || e.target.value.length <= 0)) {
-		// 	this.setState({ buttonMode: true, textMode: false });
-		// }
 		e.preventDefault();
 		if (this.state.value === '' || this.state.value.length <= 0) {
 			this.setState({ buttonMode: true, textMode: false });
