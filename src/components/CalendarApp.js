@@ -131,18 +131,27 @@ export default class CalendarApp extends React.Component {
 
 		let daysInMonth = [];
 
+		let dateContext = this.state.dateContext;
+		dateContext = dateContext.format().split('-');
+		// console.log(dateContext[1]);
+		// console.log(dateContext[0]);
+		dateContext = dateContext[1] + dateContext[0];
+
 		for (let i = 1; i <= this.daysInMonth(); i++) {
-			let className = i === this.currentDay() ? 'day current-day' : 'day';
+			// let className = i == this.currentDay() ? 'day current-day' : 'day';
+			let className = 'day';
 			daysInMonth.push(
-				<td valign='top' key={i} className={className}>
+				<td valign='top' key={i + dateContext} className={className}>
 					<span>{i}</span>
 					<br />
 					{/* <FontAwesomeIcon className='add-task' icon={faPlus} color={'grey'}></FontAwesomeIcon> */}
 					{/* <input className='add-task' type='button' value='+' /> */}
-					<AddTask></AddTask>
+					<AddTask id={i + dateContext}></AddTask>
 				</td>
 			);
 		}
+
+		// console.log(daysInMonth);
 
 		let slotsInMonth = [...blanksInMonth, ...daysInMonth];
 		let rows = [];
@@ -161,6 +170,9 @@ export default class CalendarApp extends React.Component {
 		});
 
 		rows = rows.map((day, i) => <tr key={i}>{day}</tr>);
+
+		// let temp = this.state.dateContext._d;
+		// console.log(temp);
 
 		return (
 			<div className='calendar-container' /* style={this.props.style} */>

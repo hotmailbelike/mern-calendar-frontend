@@ -7,47 +7,67 @@ export default class AddTask extends React.Component {
 		buttonMode: true,
 		textMode: false,
 		value: '',
+		taskId: '',
 		id: ''
 	};
 
 	componentDidMount() {
-		let id = this.state.id;
-		if (id || id.length >= 0 || id !== '') {
-			fetch('localhost:2000/calendarApp/' + id, {
-				method: 'GET',
-				headers: {
-					'Content-Type': 'application/json'
-				},
-				credentials: 'include'
+		let taskId = this.props.id;
+		// console.log(taskId);
+		this.setState({ taskId });
+
+		fetch('http://localhost:2000/calendarApp/' + taskId, {
+			method: 'GET',
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		})
+			.then((response) => response.json())
+			.then((res) => {
+				if (res[0]) {
+					this.changeToText();
+					this.setState({ value: res[0].task, id: res[0]._id });
+				}
 			})
-				.then((response) => response.json())
-				.then((result) => {
-					this.setState({ task: result.task });
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		}
+			.catch((error) => {
+				console.log(error);
+			});
 	}
 
 	changeToText = () => this.setState({ buttonMode: false, textMode: true });
 	changeToButton = () => this.setState({ buttonMode: true, textMode: false });
 
 	saveTask = (e) => {
-		this.setState({ value: e.target.value });
+		let value = e.target.value;
+		this.setState({ value });
+		let taskId = this.state.taskId;
 		let id = this.state.id;
 		if (!id || id.length <= 0 || id === '') {
-			fetch('localhost:2000/calendarApp', {
+			fetch('http://localhost:2000/calendarApp', {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/json'
 				},
-				credentials: 'include',
-				body: JSON.stringify(this.state.value)
+				body: JSON.stringify({ task: value, taskId })
 			})
 				.then((response) => response.json())
 				.then((result) => {
 					this.setState({ id: result._id });
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		} else {
+			fetch('http://localhost:2000/calendarApp/' + id, {
+				method: 'PUT',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify({ task: value })
+			})
+				.then((response) => response.json())
+				.then((result) => {
+					// console.log(result);
 				})
 				.catch((error) => {
 					console.log(error);
@@ -57,12 +77,24 @@ export default class AddTask extends React.Component {
 
 	saveChanges = (e) => {
 		e.preventDefault();
+		let id = this.state.id;
 		if (this.state.value === '' || this.state.value.length <= 0) {
 			this.changeToButton();
+			fetch('http://localhost:2000/calendarApp/' + id, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+				.then((response) => response.json())
+				.then((res) => {
+					// console.log(res);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
 		}
 	};
-
-	//save task to dbms and makesure to return its ID
 
 	render() {
 		return (
