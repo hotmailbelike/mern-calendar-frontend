@@ -10,16 +10,55 @@ export default class AddTask extends React.Component {
 		id: ''
 	};
 
+	componentDidMount() {
+		let id = this.state.id;
+		if (id || id.length >= 0 || id !== '') {
+			fetch('localhost:2000/calendarApp/' + id, {
+				method: 'GET',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include'
+			})
+				.then((response) => response.json())
+				.then((result) => {
+					this.setState({ task: result.task });
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+	}
+
 	changeToText = () => this.setState({ buttonMode: false, textMode: true });
+	changeToButton = () => this.setState({ buttonMode: true, textMode: false });
 
 	saveTask = (e) => {
 		this.setState({ value: e.target.value });
+		let id = this.state.id;
+		if (!id || id.length <= 0 || id === '') {
+			fetch('localhost:2000/calendarApp', {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				credentials: 'include',
+				body: JSON.stringify(this.state.value)
+			})
+				.then((response) => response.json())
+				.then((result) => {
+					this.setState({ id: result._id });
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
 	};
 
 	saveChanges = (e) => {
 		e.preventDefault();
 		if (this.state.value === '' || this.state.value.length <= 0) {
-			this.setState({ buttonMode: true, textMode: false });
+			this.changeToButton();
 		}
 	};
 
