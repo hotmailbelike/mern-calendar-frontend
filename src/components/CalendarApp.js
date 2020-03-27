@@ -7,6 +7,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import AddTask from './AddTask';
 import MonthList from './MonthList';
 import YearList from './YearList';
+import WeekNames from './WeekNames';
 
 export default class CalendarApp extends React.Component {
 	state = {
@@ -15,7 +16,7 @@ export default class CalendarApp extends React.Component {
 		showYearList: ''
 	};
 
-	weekdayNames = moment.weekdays();
+	// weekNames = moment.weekdays();
 	weekdayShortNames = moment.weekdaysShort();
 	monthNames = moment.months();
 
@@ -111,11 +112,11 @@ export default class CalendarApp extends React.Component {
 	// 	);
 
 	render() {
-		let weekdayNames = this.weekdayShortNames.map((day) => (
-			<td key={day} className='week-day'>
-				{day}
-			</td>
-		));
+		// let weekNames = this.weekdayShortNames.map((day) => (
+		// 	<td key={day} className='week-day'>
+		// 		{day}
+		// 	</td>
+		// ));
 
 		let blanksInMonth = [];
 
@@ -187,7 +188,7 @@ export default class CalendarApp extends React.Component {
 						</tr>
 					</thead>
 					<tbody>
-						<tr>{weekdayNames}</tr>
+						<WeekNames weekdayShortNames={this.weekdayShortNames}></WeekNames>
 						{rows}
 					</tbody>
 				</table>
