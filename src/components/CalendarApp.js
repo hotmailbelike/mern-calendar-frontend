@@ -6,6 +6,7 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 //get components
 import AddTask from './AddTask';
 import MonthList from './MonthList';
+import YearList from './YearList';
 
 export default class CalendarApp extends React.Component {
 	state = {
@@ -24,7 +25,7 @@ export default class CalendarApp extends React.Component {
 
 	daysInMonth = () => this.state.dateContext.daysInMonth();
 
-	currentDate = () => this.state.dateContext.get('date');
+	// currentDate = () => this.state.dateContext.get('date');
 
 	currentDay = () => this.state.dateContext.format('D');
 
@@ -48,7 +49,7 @@ export default class CalendarApp extends React.Component {
 		});
 	};
 
-	onYearListDoubleClick = () => this.setState({ showYearList: true });
+	onYearListClick = () => this.setState({ showYearList: true });
 
 	setYear = (year) => {
 		let dateContext = { ...this.state.dateContext };
@@ -100,14 +101,14 @@ export default class CalendarApp extends React.Component {
 	// 	</span>
 	// );
 
-	YearList = (props) =>
-		this.state.showYearList ? (
-			<input type='number' defaultValue={this.currentYear()} className='editor-year' onKeyUp={this.onYearListKeyUp} onChange={(e) => this.onYearListChange(e)} />
-		) : (
-			<span className='label-year' onDoubleClick={this.onYearListDoubleClick}>
-				{this.currentYear()}
-			</span>
-		);
+	// YearList = (props) =>
+	// 	this.state.showYearList ? (
+	// 		<input min={1} max={9999} type='number' defaultValue={this.currentYear()} className='editor-year' onKeyUp={this.onYearListKeyUp} onChange={(e) => this.onYearListChange(e)} />
+	// 	) : (
+	// 		<span className='label-year' onClick={this.onYearListClick}>
+	// 			{this.currentYear()}
+	// 		</span>
+	// 	);
 
 	render() {
 		let weekdayNames = this.weekdayShortNames.map((day) => (
@@ -125,7 +126,7 @@ export default class CalendarApp extends React.Component {
 				</td>
 			);
 		}
-		// i*17 just so key becomes unique
+		// i*17 just to generate unique key
 
 		let daysInMonth = [];
 
@@ -178,7 +179,7 @@ export default class CalendarApp extends React.Component {
 					<thead>
 						<tr className='calendar-header'>
 							<td colSpan='5'>
-								<MonthList onMonthClick={this.onMonthClick} showMonthList={this.state.showMonthList} monthNames={this.monthNames} currentMonth={this.currentMonth} onMonthListClick={this.onMonthListClick}></MonthList> <this.YearList></this.YearList>
+								<MonthList onMonthClick={this.onMonthClick} showMonthList={this.state.showMonthList} monthNames={this.monthNames} currentMonth={this.currentMonth} onMonthListClick={this.onMonthListClick}></MonthList> <YearList showYearList={this.state.showYearList} currentYear={this.currentYear} onYearListKeyUp={this.onYearListKeyUp} onYearListChange={this.onYearListChange} onYearListClick={this.onYearListClick}></YearList>
 							</td>
 							<td colSpan='2' className='change-month'>
 								<FontAwesomeIcon icon={faChevronLeft} onClick={this.prevMonth}></FontAwesomeIcon> <FontAwesomeIcon icon={faChevronRight} onClick={this.nextMonth}></FontAwesomeIcon>
