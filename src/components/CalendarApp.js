@@ -3,14 +3,11 @@ import moment from 'moment';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
+//get components
 import AddTask from './AddTask';
+import MonthList from './MonthList';
 
 export default class CalendarApp extends React.Component {
-	// constructor(props) {
-	// 	super(props);
-	// 	this.style = props.style;
-	// }
-
 	state = {
 		dateContext: moment(),
 		showMonthList: false,
@@ -84,24 +81,24 @@ export default class CalendarApp extends React.Component {
 
 	//Components (will be separated later)
 
-	Month = (props) => (
-		<div className='month'>
-			{props.monthNames.map((monthName) => (
-				<div key={monthName}>
-					<a href='#' onClick={() => this.onMonthClick(monthName)}>
-						{monthName}
-					</a>
-				</div>
-			))}
-		</div>
-	);
+	// Month = (props) => (
+	// 	<div className='month'>
+	// 		{props.monthNames.map((monthName) => (
+	// 			<div key={monthName}>
+	// 				<a href='#' onClick={() => this.onMonthClick(monthName)}>
+	// 					{monthName}
+	// 				</a>
+	// 			</div>
+	// 		))}
+	// 	</div>
+	// );
 
-	MonthList = (props) => (
-		<span className='label-month' onClick={this.onMonthListClick}>
-			{this.currentMonth()}
-			{this.state.showMonthList && <this.Month monthNames={this.monthNames}></this.Month>}
-		</span>
-	);
+	// MonthList = (props) => (
+	// 	<span className='label-month' onClick={this.onMonthListClick}>
+	// 		{this.currentMonth()}
+	// 		{this.state.showMonthList && <this.Month monthNames={this.monthNames}></this.Month>}
+	// 	</span>
+	// );
 
 	YearList = (props) =>
 		this.state.showYearList ? (
@@ -181,7 +178,7 @@ export default class CalendarApp extends React.Component {
 					<thead>
 						<tr className='calendar-header'>
 							<td colSpan='5'>
-								<this.MonthList></this.MonthList> <this.YearList></this.YearList>
+								<MonthList onMonthClick={this.onMonthClick} showMonthList={this.state.showMonthList} monthNames={this.monthNames} currentMonth={this.currentMonth} onMonthListClick={this.onMonthListClick}></MonthList> <this.YearList></this.YearList>
 							</td>
 							<td colSpan='2' className='change-month'>
 								<FontAwesomeIcon icon={faChevronLeft} onClick={this.prevMonth}></FontAwesomeIcon> <FontAwesomeIcon icon={faChevronRight} onClick={this.nextMonth}></FontAwesomeIcon>
