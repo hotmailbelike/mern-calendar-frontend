@@ -81,43 +81,7 @@ export default class CalendarApp extends React.Component {
 		this.setState({ dateContext });
 	};
 
-	//Components (will be separated later)
-
-	// Month = (props) => (
-	// 	<div className='month'>
-	// 		{props.monthNames.map((monthName) => (
-	// 			<div key={monthName}>
-	// 				<a href='#' onClick={() => this.onMonthClick(monthName)}>
-	// 					{monthName}
-	// 				</a>
-	// 			</div>
-	// 		))}
-	// 	</div>
-	// );
-
-	// MonthList = (props) => (
-	// 	<span className='label-month' onClick={this.onMonthListClick}>
-	// 		{this.currentMonth()}
-	// 		{this.state.showMonthList && <this.Month monthNames={this.monthNames}></this.Month>}
-	// 	</span>
-	// );
-
-	// YearList = (props) =>
-	// 	this.state.showYearList ? (
-	// 		<input min={1} max={9999} type='number' defaultValue={this.currentYear()} className='editor-year' onKeyUp={this.onYearListKeyUp} onChange={(e) => this.onYearListChange(e)} />
-	// 	) : (
-	// 		<span className='label-year' onClick={this.onYearListClick}>
-	// 			{this.currentYear()}
-	// 		</span>
-	// 	);
-
 	render() {
-		// let weekNames = this.weekdayShortNames.map((day) => (
-		// 	<td key={day} className='week-day'>
-		// 		{day}
-		// 	</td>
-		// ));
-
 		let blanksInMonth = [];
 
 		for (let i = 0; i < this.firstDayOfMonth(); i++) {
@@ -144,8 +108,7 @@ export default class CalendarApp extends React.Component {
 				<td valign='top' key={i + dateContext} className={className}>
 					<span>{i}</span>
 					<br />
-					{/* <FontAwesomeIcon className='add-task' icon={faPlus} color={'grey'}></FontAwesomeIcon> */}
-					{/* <input className='add-task' type='button' value='+' /> */}
+
 					<AddTask id={i + dateContext}></AddTask>
 				</td>
 			);
@@ -170,9 +133,6 @@ export default class CalendarApp extends React.Component {
 		});
 
 		rows = rows.map((day, i) => <tr key={i}>{day}</tr>);
-
-		// let temp = this.state.dateContext._d;
-		// console.log(temp);
 
 		return (
 			<div className='calendar-container' /* style={this.props.style} */>
