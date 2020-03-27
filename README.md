@@ -18,7 +18,7 @@ This is the Frontend part of the Application, instructions from the Backend part
 
 **Please Note:**
 This project was created using cloud Database Management services by MongoDB Atlas, hence if are any network issues there may be problems when creating, editing and deleting tasks.<br/>
-**Best Practice is to wait a few seconds after performing any operation**
+**Best Practice is to always wait a few seconds after performing any operation**
 
 **Project Demo:**
 
