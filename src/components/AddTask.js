@@ -36,10 +36,32 @@ export default class AddTask extends React.Component {
 
 	changeToText = () => this.setState({ buttonMode: false, textMode: true });
 	changeToButton = () => this.setState({ buttonMode: true, textMode: false });
+	removeTask = () => {
+		let id = this.state.id;
+
+		if (!this.state.value || this.state.value === '' || this.state.value.length <= 0) {
+			this.changeToButton();
+			fetch('http://localhost:2000/calendarApp/' + id, {
+				method: 'DELETE',
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			})
+				.then((response) => response.json())
+				.then((res) => {
+					// console.log(res);
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+		}
+	};
 
 	saveTask = (e) => {
 		let value = e.target.value;
-		this.setState({ value });
+		this.setState({ value }, () => {
+			this.removeTask();
+		});
 		let taskId = this.state.taskId;
 		let id = this.state.id;
 		if (!id || id.length <= 0 || id === '') {
@@ -75,36 +97,11 @@ export default class AddTask extends React.Component {
 		}
 	};
 
-	saveChanges = (e) => {
-		e.preventDefault();
-		let id = this.state.id;
-		if (this.state.value === '' || this.state.value.length <= 0) {
-			this.changeToButton();
-			fetch('http://localhost:2000/calendarApp/' + id, {
-				method: 'DELETE',
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			})
-				.then((response) => response.json())
-				.then((res) => {
-					// console.log(res);
-				})
-				.catch((error) => {
-					console.log(error);
-				});
-		}
-	};
-
 	render() {
 		return (
 			<div>
 				{this.state.buttonMode && <FontAwesomeIcon className='add-task button' icon={faPlus} color={'grey'} onClick={this.changeToText}></FontAwesomeIcon>}
-				{this.state.textMode && (
-					<form onSubmit={this.saveChanges}>
-						<input onChange={this.saveTask} value={this.state.value} className='add-task text' type='text' />
-					</form>
-				)}
+				{this.state.textMode && <textarea rows={'3'} onChange={this.saveTask} value={this.state.value} className='add-task text' type='text'></textarea>}
 			</div>
 		);
 	}

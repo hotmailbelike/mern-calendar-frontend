@@ -109,7 +109,12 @@ tr {
 
 .add-task {
 	cursor: pointer;
-	width: 70%;
+	width: 80%;
+	text-align: center;
+	resize: none;
+	overflow: hidden;
+	min-height: 50px;
+	max-height: 100px;
 }
 
 .button {
