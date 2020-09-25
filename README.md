@@ -4,6 +4,9 @@
 A Calendar App where tasks can be add, edited or deleted for a particular date
 <br/><br/>
 
+[Live Demo](https://omar-mern-contact-keeper.herokuapp.com/login)
+
+
 **How to use this:**
 
 This is the Frontend part of the Application, instructions from the Backend part has to be completed first; [link to Backend Repository](https://github.com/hotmailbelike/mern-calendar-backend), follow the instructions given there and then come back here to follow the rest of the instructions for Frontend part
