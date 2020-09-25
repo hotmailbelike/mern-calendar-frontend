@@ -4,7 +4,7 @@
 A Calendar App where tasks can be add, edited or deleted for a particular date
 <br/><br/>
 
-[Live Demo](https://omar-mern-contact-keeper.herokuapp.com/login)
+[Live Demo](https://omar-mern-calendar-frontend.netlify.app/)
 
 
 **How to use this:**
