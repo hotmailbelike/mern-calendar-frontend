@@ -19,9 +19,6 @@ This is the Frontend part of the Application, instructions from the Backend part
 6. That's it! Have fun!
    <br/><br/>
 
-**Please Note:**
-This project was created using cloud Database Management services by MongoDB Atlas, hence if are any network issues there may be problems when creating, editing and deleting tasks.<br/>
-**Best Practice is to always wait a few seconds after performing any operation**
 
 **Project Demo:**
 
